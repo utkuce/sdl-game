@@ -21,17 +21,21 @@ endif
 
 SOURCES = $(wildcard src/*.cpp) $(wildcard src/IMGUI/*.cpp)
 OBJECTS = $(addprefix obj/,$(notdir $(SOURCES:.cpp=.o)))
+dir_guard=@mkdir -p $(@D)
 
 all: $(OBJECTS)
 	@echo "$(GREEN_COLOR) --> Compiling myengine shared object$(NO_COLOR)"
+	@mkdir -p bin
 	$(CXX) -shared -o $(TARGET) $^ $(SDL_LIB) $(LDFLAGS)
 
 obj/%.o: src/%.cpp
 	@echo "$(COMPILING)"
+	mkdir -p obj
 	$(CXX) -c $< -o $@ 
 
 obj/%.o: src/IMGUI/%.cpp
 	@echo "$(COMPILING)"
+	mkdir -p obj
 	$(CXX) -c $< -o $@
 
 clean:
