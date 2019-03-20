@@ -1,5 +1,7 @@
 # sdl-game
 
+A small game if you can even call it that with minimal graphics and minimal physics to learn about `sdl2`. For the meantime the player can jump, bounce of the walls and has a shield.
+
 ## Build & Run
 
 ### Windows
