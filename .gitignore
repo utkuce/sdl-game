@@ -1,0 +1,6 @@
+.vscode
+.git
+bin/*
+obj/*
+myengine/bin/*
+myengine/obj/*
