@@ -7,7 +7,7 @@
 - Install `MSYS2` and update its repositories per the insturctions [here](https://www.msys2.org/)
 - Run the application `MSYS2 MinGW 64-bit`
 - Insall sdl2 with `pacman -S mingw-w64-x86_64-SDL2`
-- `cd` to the root of this repository (e.g. `cd /c/Users/<username>/Downloads/sdl-game^`)
+- `cd` to the root of this repository (e.g. `cd /c/Users/<username>/Downloads/sdl-game`)
 - `make && bin/mygame.exe`
 
 ### Linux
