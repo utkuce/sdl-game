@@ -21,7 +21,6 @@ endif
 
 SOURCES = $(wildcard src/*.cpp) $(wildcard src/IMGUI/*.cpp)
 OBJECTS = $(addprefix obj/,$(notdir $(SOURCES:.cpp=.o)))
-dir_guard=@mkdir -p $(@D)
 
 all: $(OBJECTS)
 	@echo "$(GREEN_COLOR) --> Compiling myengine shared object$(NO_COLOR)"
