@@ -16,7 +16,8 @@
 - `cd` to the root of this repository
 - `make && bin/mygame`
 
-[![Demo](https://imgur.com/jR69fTk)](https://streamable.com/66bor "Demo")
+
+[![Demo Video](https://i.imgur.com/jR69fTk.png)](https://streamable.com/66bor "Demo Video")
 
 
 
