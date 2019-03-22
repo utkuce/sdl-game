@@ -8,7 +8,8 @@ A small game if you can even call it that with minimal graphics and minimal phys
 
 - Install `MSYS2` and update its repositories per the insturctions [here](https://www.msys2.org/)
 - Run the application `MSYS2 MinGW 64-bit`
-- Insall sdl2 with `pacman -S mingw-w64-x86_64-SDL2`
+- Install required packages
+    - `pacman -S mingw-w64-x86_64-SDL2 mingw-w64-x86_64-clang make `
 - `cd` to the root of this repository (e.g. `cd /c/Users/<username>/Downloads/sdl-game`)
 - `make && bin/mygame.exe`
 
