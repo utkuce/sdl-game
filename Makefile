@@ -23,7 +23,6 @@ endif
 copy_runtime_libs: compile_myengine
 	@echo "$(COPYING_RUNTIME_LIBS)"
 
-	@mkdir -p bin
 ifdef OS
 #Windows
 	cp -u C:/msys64/mingw64/bin/SDL2.dll bin/
@@ -36,9 +35,12 @@ else
 	cp -u myengine/bin/libmyengine.so bin
 endif
 
-compile_myengine: 
+compile_myengine: mkdir_bin
 	@echo "$(BUILDING_ENGINE)"
 	$(MAKE) -C myengine/
+
+mkdir_bin:
+	@mkdir -p bin
 
 clean:
 	rm bin/*

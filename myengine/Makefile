@@ -27,15 +27,16 @@ all: $(OBJECTS)
 	@mkdir -p bin
 	$(CXX) -shared -o $(TARGET) $^ $(SDL_LIB) $(LDFLAGS)
 
-obj/%.o: src/%.cpp
+obj/%.o: src/%.cpp mkdir_obj
 	@echo "$(COMPILING)"
-	mkdir -p obj
 	$(CXX) -c $< -o $@ 
 
-obj/%.o: src/IMGUI/%.cpp
+obj/%.o: src/IMGUI/%.cpp mkdir_obj
 	@echo "$(COMPILING)"
-	mkdir -p obj
 	$(CXX) -c $< -o $@
+
+mkdir_obj:
+	@mkdir -p obj
 
 clean:
 	rm -f $(TARGET) obj/*.o
