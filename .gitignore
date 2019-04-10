@@ -13,3 +13,4 @@ myengine/Makefile
 
 myengine/libmyengine.so
 sdlgame
+index.*

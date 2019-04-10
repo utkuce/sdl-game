@@ -44,13 +44,22 @@ void initialize(int width, int height)
 	Renderer::init(window, width, height);
 }
 
+void gameFrame() 
+{
+	EventHandler::eventLoop();
+	Renderer::render();
+}
+
 void gameLoop()
 {
-	while (!EventHandler::quitGame)
-	{
-		EventHandler::eventLoop();
-		Renderer::render();
-	}
+	#if __EMSCRIPTEN__
+    	emscripten_set_main_loop(gameFrame, -1, 1);
+	#else
+		while (!EventHandler::quitGame)
+		{
+			gameFrame();	
+		}
+	#endif
 }
 
 void finish()
