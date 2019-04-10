@@ -9,9 +9,13 @@ file(GLOB GAME_SOURCES "src/*.cpp")
 add_executable(sdlgame ${GAME_SOURCES})
 target_link_libraries(sdlgame myengine)
 
+file(MAKE_DIRECTORY "bin")
+
 IF (WIN32)
     add_custom_command(TARGET sdlgame POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different C:/msys64/mingw64/bin/SDL2.dll .
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different myengine/libmyengine.dll .
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different C:/msys64/mingw64/bin/SDL2.dll bin
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different myengine/libmyengine.dll bin
         )
 ENDIF()
+
+set(EXECUTABLE_OUTPUT_PATH "bin")
