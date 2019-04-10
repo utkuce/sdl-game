@@ -21,7 +21,7 @@ Install [sdl2](https://www.libsdl.org/index.php) development libraries and [clan
 
 - `cmake . -DCMAKE_CXX_COMPILER=clang++ -G "Unix Makefiles"` 
 - `make`
-- `./sdlgame`
+- `./bin/sdlgame`
 
 # Demo
 [Online Demo](https://utku.website/sdl-web/) compiled with [Emscripten](https://emscripten.org/) toolchain
