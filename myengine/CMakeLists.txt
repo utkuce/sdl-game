@@ -6,4 +6,13 @@ set(CMAKE_CXX_STANDARD 11)
 file(GLOB ENGINE_SOURCES "src/*.cpp")
 file(GLOB IMGUI_SOURCES "src/IMGUI/*.cpp")
 add_library(myengine SHARED ${ENGINE_SOURCES} ${IMGUI_SOURCES})
-target_link_libraries(myengine SDL2main SDL2 GL)
+
+find_package(OpenGL REQUIRED)
+
+IF (WIN32)
+    target_link_libraries(myengine Imm32 mingw32)
+ENDIF()
+
+# mingw32 should be before SDL2main
+target_link_libraries(myengine SDL2main SDL2 ${OPENGL_LIBRARIES})
+

@@ -13,4 +13,9 @@ myengine/Makefile
 
 myengine/libmyengine.so
 sdlgame
+
+*.dll
+*.dll.a
+*.exe
+
 index.*
