@@ -6,6 +6,7 @@
 #include <vector>
 #include <algorithm>
 
+#include "imgui/imgui.h"
 #include "imgui_impl_sdl.h"
 #include "Renderer.h"
 

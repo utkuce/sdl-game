@@ -38,9 +38,6 @@ void Renderer::init(SDL_Window *window, float width, float height)
 
     SDL_WarpMouseInWindow(window, windowWidth / 2, windowHeight / 2);
     SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
-
-    ImGui::GetIO().IniFilename = NULL;
-    ImGui_ImplSdl_Init(window);
 }
 
 void update_framerate()
@@ -69,9 +66,12 @@ void update_framerate()
 
 void update_interface(SDL_Window *window)
 {
-    ImGui_ImplSdl_NewFrame(window);
+    ImGui_ImplOpenGL2_NewFrame();
+    ImGui_ImplSDL2_NewFrame(window);
+    ImGui::NewFrame();
     Interface::update();
     ImGui::Render();
+    ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 }
 
 void Renderer::render()

@@ -7,6 +7,7 @@ SDL_GLContext glcontext;
 
 void initialize(int width, int height)
 {
+	ImGui::CreateContext();
 	// Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
@@ -40,8 +41,14 @@ void initialize(int width, int height)
 		exit(1);
 	}
 
+	// set vsync default value
 	SDL_GL_SetSwapInterval(Renderer::vsync);
+
+	// initialize renderer
 	Renderer::init(window, width, height);
+
+	// init imgui
+	Interface::init(window, glcontext);
 }
 
 void gameFrame() 
@@ -55,7 +62,7 @@ void gameLoop()
 	#if __EMSCRIPTEN__
     	emscripten_set_main_loop(gameFrame, -1, 1);
 	#else
-		while (!EventHandler::quitGame)
+		while (EventHandler::quitGame == false)
 		{
 			gameFrame();	
 		}
@@ -67,7 +74,10 @@ void finish()
 	for (int i = 0; i < Shape::render_list.size(); i++)
 		delete Shape::render_list[i];
 
-	ImGui_ImplSdl_Shutdown();
+    ImGui_ImplOpenGL2_Shutdown();
+    ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(window);
 	SDL_Quit();

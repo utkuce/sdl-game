@@ -14,7 +14,7 @@ void EventHandler::eventLoop()
   while( SDL_PollEvent( &e ) != 0 )
   {
     EventHandler::processEvent(e);
-    ImGui_ImplSdl_ProcessEvent(&e);
+    ImGui_ImplSDL2_ProcessEvent(&e);
   }
 
   keystate = SDL_GetKeyboardState(NULL);

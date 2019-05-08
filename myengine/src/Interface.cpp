@@ -1,8 +1,25 @@
 #include "Interface.h"
+#include <iostream>
 
 bool Interface::settings = false, Interface::debug = false;
 int Interface::fps_display = 0;
 std::string Interface::debugChannel = "";
+
+void Interface::init(SDL_Window* window, SDL_GLContext glContext) 
+{
+    ImGui_ImplSDL2_InitForOpenGL(window, glContext);
+    ImGui_ImplOpenGL2_Init();
+    ImGui::CreateContext();
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->AddFontDefault();
+    io.Fonts->Build();
+
+    //ImGui::StyleColorsDark();
+    ImGui::StyleColorsClassic();
+
+    io.IniFilename = NULL;
+}
 
 void Interface::update()
 {

@@ -4,7 +4,7 @@ project (my_engine)
 set(CMAKE_CXX_STANDARD 11)
 
 file(GLOB ENGINE_SOURCES "src/*.cpp")
-file(GLOB IMGUI_SOURCES "src/IMGUI/*.cpp")
+file(GLOB IMGUI_SOURCES "src/imgui/*.cpp")
 add_library(myengine SHARED ${ENGINE_SOURCES} ${IMGUI_SOURCES})
 
 find_package(OpenGL REQUIRED)
