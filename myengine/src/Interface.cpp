@@ -15,8 +15,8 @@ void Interface::init(SDL_Window* window, SDL_GLContext glContext)
     io.Fonts->AddFontDefault();
     io.Fonts->Build();
 
-    //ImGui::StyleColorsDark();
-    ImGui::StyleColorsClassic();
+    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsClassic();
 
     io.IniFilename = NULL;
 }
