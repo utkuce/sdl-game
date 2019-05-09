@@ -71,11 +71,8 @@ void gameLoop()
 
 void finish()
 {
-	for (int i = 0; i < Shape::render_list.size(); i++)
-		delete Shape::render_list[i];
-
-    ImGui_ImplOpenGL2_Shutdown();
-    ImGui_ImplSDL2_Shutdown();
+  ImGui_ImplOpenGL2_Shutdown();
+  ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
 	SDL_GL_DeleteContext(glcontext);
