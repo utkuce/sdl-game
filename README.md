@@ -20,6 +20,7 @@ Install [sdl2](https://www.libsdl.org/index.php) development libraries and [clan
 ## Build & Run
 
     $ git clone https://github.com/utkuce/sdl-game.git
+    $ cd sdl-game/
     $ git submodule update --init
     $ cmake . -DCMAKE_CXX_COMPILER=clang++ -G "Unix Makefiles"
     $ make
