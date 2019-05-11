@@ -38,7 +38,7 @@ void Player::update()
   
   Interface::debugChannel += "\nacceleration: " + std::to_string((int)acceleration) + 
                              ", gravity: " + std::to_string((int)gravity) +
-                             "\nplayer(x,y, speed): " + std::to_string((int)x) + "," + 
+                             "\nplayer(x,y, velocity.y): " + std::to_string((int)x) + "," + 
                              std::to_string((int)y) + "," + std::to_string((int)velocity.y);  
 
   // go right
