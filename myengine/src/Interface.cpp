@@ -52,11 +52,11 @@ void Interface::update()
   if (debug)
   {
     std::string s = "fps: " + std::to_string(fps_display) +
-                    "\nvsync: " + (Renderer::vsync ? "on" : "off") +
-                    "\nentity count: " + std::to_string(Shape::render_list.size()) +
+                    ", vsync: " + (Renderer::vsync ? "on" : "off") +
+                    ", entity count: " + std::to_string(Shape::render_list.size()) +
                     debugChannel;
 
-    ImGui::SetNextWindowSize(ImVec2(300, 150));
+    ImGui::SetNextWindowSize(ImVec2(300, 80));
     ImGui::SetNextWindowPos(ImVec2(20, 20));
     ImGui::Begin("Info", NULL, ImGuiWindowFlags_NoResize |
                                ImGuiWindowFlags_NoCollapse);

@@ -36,12 +36,10 @@ void Player::update()
   gravity = 3*acceleration;
 
   
-  Interface::debugChannel += "\nacceleration: " + std::to_string(acceleration) + 
-                             "\ngravity: " + std::to_string(gravity) +
-                             "\nvelocity.y " + std::to_string(velocity.y) +
-                             "\nplayer.y: " + std::to_string(y) +
-                             "\nplayer.x: " + std::to_string(x);
-  
+  Interface::debugChannel += "\nacceleration: " + std::to_string((int)acceleration) + 
+                             ", gravity: " + std::to_string((int)gravity) +
+                             "\nplayer(x,y, speed): " + std::to_string((int)x) + "," + 
+                             std::to_string((int)y) + "," + std::to_string((int)velocity.y);  
 
   // go right
   if (playerValues.goRight && velocity.x < speed_limit)
