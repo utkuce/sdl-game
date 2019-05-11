@@ -37,8 +37,10 @@ void Interface::update()
     if (ImGui::Checkbox("Vertical Sync ", &Renderer::vsync))
       SDL_GL_SetSwapInterval(Renderer::vsync);
 
+#ifndef __EMSCRIPTEN__
     if (ImGui::Checkbox("Fullscreen ", &Renderer::fullscreen))
       Renderer::toggleFullscreen();
+#endif
 
     ImGui::SetCursorPos(ImVec2(320, 470));
     if (ImGui::Button("Quit Game"))
