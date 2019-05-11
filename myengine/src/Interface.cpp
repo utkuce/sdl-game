@@ -1,7 +1,7 @@
 #include "Interface.h"
 #include <iostream>
 
-bool Interface::settings = false, Interface::debug = false;
+bool Interface::settings = false, Interface::debug = true;
 int Interface::fps_display = 0;
 std::string Interface::debugChannel = "";
 
