@@ -8,7 +8,7 @@ std::string Interface::debugChannel = "";
 void Interface::init(SDL_Window* window, SDL_GLContext glContext) 
 {
     ImGui_ImplSDL2_InitForOpenGL(window, glContext);
-    ImGui_ImplOpenGL2_Init();
+    ImGui_ImplOpenGL3_Init();
     ImGui::CreateContext();
 
     ImGuiIO& io = ImGui::GetIO();
