@@ -42,11 +42,37 @@ void Rectangle::update()
 
 void Rectangle::draw()
 {
-  glColor3f(1, 1, 1);
-  glBegin(GL_QUADS);
-  for (int i = 0; i < 4; i++)
-    glVertex2f(glCoords[i][0], glCoords[i][1]);
-  glEnd();
+  //IBO data
+  GLuint indexData[] = { 0, 1, 2, 3 };
+  //Create VBO
+  glGenBuffers( 1, &Renderer::gVBO );
+  glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
+  glBufferData( GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), glCoords, GL_DYNAMIC_DRAW );
+  //Create IBO
+  glGenBuffers( 1, &Renderer::gIBO );
+  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO );
+  glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), indexData, GL_DYNAMIC_DRAW );
+
+  //Bind program
+  glUseProgram( Renderer::gProgramID );
+  //Enable vertex position
+  glEnableVertexAttribArray( Renderer::gVertexPos2DLocation );
+  //Set vertex data 
+  glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
+  glVertexAttribPointer( Renderer::gVertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL ); 
+  //Set index data and render 
+  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO ); 
+  glDrawElements( GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL ); 
+  //Disable vertex position 
+  glDisableVertexAttribArray( Renderer::gVertexPos2DLocation ); 
+  //Unbind program 
+  glUseProgram( NULL );
+  
+  // glColor3f(1, 1, 1);
+  // glBegin(GL_QUADS);
+  // for (int i = 0; i < 4; i++)
+  //   glVertex2f(glCoords[i][0], glCoords[i][1]);
+  // glEnd();
 }
 
 Line::Line(float x1, float y1, float x2, float y2) : Shape(x1, y1)
@@ -69,13 +95,13 @@ void Line::update()
 
 void Line::draw()
 {
-  glLineWidth(2);
-  glColor3f(1, 0, 0);
+  // glLineWidth(2);
+  // glColor3f(1, 0, 0);
 
-  glBegin(GL_LINES);
-  for (int i = 0; i < 2; i++)
-    glVertex2f(glCoords[i][0], glCoords[i][1]);
-  glEnd();
+  // glBegin(GL_LINES);
+  // for (int i = 0; i < 2; i++)
+  //   glVertex2f(glCoords[i][0], glCoords[i][1]);
+  // glEnd();
 }
 
 Circle::Circle(float x, float y, float r) : Shape(x + r, y + r)
@@ -111,11 +137,11 @@ void Circle::update()
 
 void Circle::draw()
 {
-  glLineWidth(2);
-  glColor3f(1, 0, 0);
+  // glLineWidth(2);
+  // glColor3f(1, 0, 0);
 
-  glBegin(GL_LINE_LOOP);
-  for (int i = 0; i < glCoords.size(); i++)
-    glVertex2f(glCoords[i][0], glCoords[i][1]);
-  glEnd();
+  // glBegin(GL_LINE_LOOP);
+  // for (int i = 0; i < glCoords.size(); i++)
+  //   glVertex2f(glCoords[i][0], glCoords[i][1]);
+  // glEnd();
 }

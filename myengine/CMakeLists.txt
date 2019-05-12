@@ -11,6 +11,12 @@ add_library(myengine SHARED ${ENGINE_SOURCES} ${IMGUI_SOURCES})
 set (OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
 
+find_package(GLEW REQUIRED)
+if (GLEW_FOUND)
+    include_directories(myengine ${GLEW_INCLUDE_DIRS})
+    target_link_libraries(myengine ${GLEW_LIBRARIES})
+endif()
+
 IF (WIN32)
 # Imm32 is required for imgui
     target_link_libraries(myengine Imm32 mingw32)

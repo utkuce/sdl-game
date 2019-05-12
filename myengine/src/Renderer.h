@@ -2,6 +2,7 @@
 #define RENDERER_H
 
 #include <SDL2/SDL.h>
+#include <GL/glew.h>
 #include <SDL2/SDL_opengl.h>
 
 #include "Shape.h"
@@ -20,6 +21,10 @@ class Renderer
 
     static float frameRate;
     static bool vsync, fullscreen;
+
+    //Graphics program 
+    static GLuint gProgramID, gVBO, gIBO; 
+    static GLint gVertexPos2DLocation; 
 
   private:
     static SDL_Window* window;

@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include <iostream>
 
 SDL_Window *Renderer::window;
 int windowWidth, windowHeight;
@@ -12,6 +13,17 @@ int startTime;
 float Renderer::frameRate = -1;
 bool Renderer::vsync = true;
 bool Renderer::fullscreen = false;
+
+//Graphics program
+GLuint Renderer::gProgramID = 0;
+GLint Renderer::gVertexPos2DLocation = -1;
+GLuint Renderer::gVBO = 0;
+GLuint Renderer::gIBO = 0;
+
+//Shader loading utility programs 
+bool initGL();
+void printProgramLog( GLuint program ); 
+void printShaderLog( GLuint shader );
 
 void Renderer::translateCoords(float coords[2])
 {
@@ -38,6 +50,101 @@ void Renderer::init(SDL_Window *window, float width, float height)
 
     SDL_WarpMouseInWindow(window, windowWidth / 2, windowHeight / 2);
     SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
+
+    initGL();
+}
+
+bool initGL() {
+
+    //Success flag
+    bool success = true;
+    //Generate program
+    glewInit();
+    Renderer::gProgramID = glCreateProgram();
+
+    //Create vertex shader
+    GLuint vertexShader = glCreateShader( GL_VERTEX_SHADER );
+    //Get vertex source
+    const GLchar* vertexShaderSource[] =
+    {
+        "#version 300 es\n"
+        "in vec2 LVertexPos2D;"
+        "void main() {"
+        "    gl_Position = vec4( LVertexPos2D.x, LVertexPos2D.y, 0, 1 );"
+        "}" 
+    };
+    
+    //Set vertex source
+    glShaderSource( vertexShader, 1, vertexShaderSource, NULL );
+    //Compile vertex source
+    glCompileShader( vertexShader );
+    //Check vertex shader for errors
+    GLint vShaderCompiled = GL_FALSE;
+    glGetShaderiv( vertexShader, GL_COMPILE_STATUS, &vShaderCompiled );
+    if( vShaderCompiled != GL_TRUE )
+    {
+        printf( "Unable to compile vertex shader %d!\n", vertexShader );
+        printShaderLog( vertexShader );
+        success = false;
+    }
+    else
+    {
+        //Attach vertex shader to program
+        glAttachShader( Renderer::gProgramID, vertexShader );
+        //Create fragment shader
+        GLuint fragmentShader = glCreateShader( GL_FRAGMENT_SHADER );
+        //Get fragment source
+        const GLchar* fragmentShaderSource[] = 
+        {
+            "#version 300 es\n"
+            "out lowp vec4 LFragment;"
+            "void main() {"
+            "   LFragment = vec4( 1.0, 1.0, 1.0, 1.0 );"
+            "}"
+        };
+        
+        //Set fragment source
+        glShaderSource( fragmentShader, 1, fragmentShaderSource, NULL );
+        //Compile fragment source
+        glCompileShader( fragmentShader );
+        //Check fragment shader for errors
+        GLint fShaderCompiled = GL_FALSE;
+        glGetShaderiv( fragmentShader, GL_COMPILE_STATUS, &fShaderCompiled );
+        if( fShaderCompiled != GL_TRUE )
+        {
+            printf( "Unable to compile fragment shader %d!\n", fragmentShader );
+            printShaderLog( fragmentShader );
+            success = false;
+        }
+        else
+        {
+            //Attach fragment shader to program
+            glAttachShader( Renderer::gProgramID, fragmentShader );
+            //Link program
+            glLinkProgram( Renderer::gProgramID );
+            //Check for errors
+            GLint programSuccess = GL_TRUE;
+            glGetProgramiv( Renderer::gProgramID, GL_LINK_STATUS, &programSuccess );
+            if( programSuccess != GL_TRUE )
+            {
+                printf( "Error linking program %d!\n", Renderer::gProgramID );
+                printProgramLog( Renderer::gProgramID );
+                success = false;
+            }
+            else
+            {
+                //Get vertex attribute location
+                Renderer::gVertexPos2DLocation = glGetAttribLocation( Renderer::gProgramID, "LVertexPos2D" );
+                if( Renderer::gVertexPos2DLocation == -1 )
+                {
+                    printf( "LVertexPos2D is not a valid glsl program variable!\n" );
+                    success = false;
+                }
+            }
+        }
+    }
+    
+    return success;
 }
 
 void update_framerate()
@@ -97,4 +204,59 @@ void Renderer::toggleFullscreen()
     SDL_SetWindowFullscreen(Renderer::window,
 			    Renderer::fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
     SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+}
+
+void printProgramLog( GLuint program ) { 
+    //Make sure name is shader 
+    if( glIsProgram( program ) ) 
+    { 
+        //Program log length 
+        int infoLogLength = 0; 
+        int maxLength = infoLogLength; 
+        //Get info string length 
+        glGetProgramiv( program, GL_INFO_LOG_LENGTH, &maxLength ); 
+        //Allocate string 
+        char* infoLog = new char[ maxLength ]; 
+        //Get info log 
+        glGetProgramInfoLog( program, maxLength, &infoLogLength, infoLog ); 
+        if( infoLogLength > 0 ) 
+        { 
+            //Print Log 
+            printf( "%s\n", infoLog ); 
+        } 
+        //Deallocate string 
+        delete[] infoLog; 
+        
+    } 
+    else 
+    { 
+        printf( "Name %d is not a program\n", program ); 
+    } 
+} 
+
+void printShaderLog( GLuint shader ) { 
+    //Make sure name is shader 
+    if( glIsShader( shader ) ) 
+    { 
+        //Shader log length 
+        int infoLogLength = 0; 
+        int maxLength = infoLogLength; 
+        //Get info string length 
+        glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &maxLength ); 
+        //Allocate string 
+        char* infoLog = new char[ maxLength ]; 
+        //Get info log 
+        glGetShaderInfoLog( shader, maxLength, &infoLogLength, infoLog ); 
+        if( infoLogLength > 0 ) 
+        { 
+            //Print Log 
+            printf( "%s\n", infoLog ); 
+        } 
+        //Deallocate string 
+        delete[] infoLog; 
+    } 
+    else 
+    { 
+        printf( "Name %d is not a shader\n", shader ); 
+    } 
 }
