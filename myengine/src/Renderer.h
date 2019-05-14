@@ -2,8 +2,7 @@
 #define RENDERER_H
 
 #include <SDL2/SDL.h>
-#include <GL/glew.h>
-#include <SDL2/SDL_opengl.h>
+#include <GLES3/gl3.h>
 
 #include "Shape.h"
 #include "Interface.h"
@@ -29,6 +28,8 @@ class Renderer
   private:
     static SDL_Window* window;
     static ImVec4 background;
+
+    static void initGL();
 };
 
 #endif
