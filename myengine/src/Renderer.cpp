@@ -23,18 +23,20 @@ GLuint Renderer::gIBO = 0;
 //Fragment source
 const GLchar* fragmentShaderSource[] = 
 {
-    "#version 300 es\n"
-    "out lowp vec4 LFragment;"
+    "#version 100\n"
+    "precision highp float;"
+    "varying vec4 LFragment;"
     "void main() {"
-    "   LFragment = vec4( 1.0, 1.0, 1.0, 1.0 );"
+    "   gl_FragColor = vec4( 1.0, 1.0, 1.0, 1.0 );"
     "}"
 };
 
 //Vertex source
 const GLchar* vertexShaderSource[] =
 {
-    "#version 300 es\n"
-    "in vec2 LVertexPos2D;"
+    "#version 100\n"
+    "precision highp float;"
+    "attribute vec2 LVertexPos2D;"
     "void main() {"
     "    gl_Position = vec4( LVertexPos2D.xy, 0, 1 );"
     "}" 
