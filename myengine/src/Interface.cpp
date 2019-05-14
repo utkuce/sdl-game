@@ -7,9 +7,9 @@ std::string Interface::debugChannel = "";
 
 void Interface::init(SDL_Window* window, SDL_GLContext glContext) 
 {
+    ImGui::CreateContext();
     ImGui_ImplSDL2_InitForOpenGL(window, glContext);
     ImGui_ImplOpenGL3_Init();
-    ImGui::CreateContext();
 
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->AddFontDefault();

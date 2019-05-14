@@ -7,7 +7,6 @@ SDL_GLContext glcontext;
 
 void initialize(int width, int height)
 {
-	ImGui::CreateContext();
 	// Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
