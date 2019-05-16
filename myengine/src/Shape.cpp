@@ -85,13 +85,27 @@ void Line::update()
 
 void Line::draw()
 {
-  // glLineWidth(2);
-  // glColor3f(1, 0, 0);
+  //Create VBO
+  glGenBuffers( 1, &Renderer::gVBO );
+  glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
+  glBufferData( GL_ARRAY_BUFFER, 2 * 2 * sizeof(GLfloat), glCoords, GL_DYNAMIC_DRAW );
+ 
+  //Create IBO
+  GLuint indexData[] = { 0, 1 };
+  glGenBuffers( 1, &Renderer::gIBO );
+  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO );
+  glBufferData( GL_ELEMENT_ARRAY_BUFFER, 2 * sizeof(GLuint), indexData, GL_DYNAMIC_DRAW );
 
-  // glBegin(GL_LINES);
-  // for (int i = 0; i < 2; i++)
-  //   glVertex2f(glCoords[i][0], glCoords[i][1]);
-  // glEnd();
+  //Enable vertex position
+  glEnableVertexAttribArray( Renderer::gVertexPos2DLocation );
+  //Set vertex data 
+  glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
+  glVertexAttribPointer( Renderer::gVertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL ); 
+  //Set index data and render 
+  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO ); 
+  glDrawElements( GL_LINES, 2, GL_UNSIGNED_INT, NULL ); 
+  //Disable vertex position 
+  glDisableVertexAttribArray( Renderer::gVertexPos2DLocation ); 
 }
 
 Circle::Circle(float x, float y, float r) : Shape(x + r, y + r)
