@@ -12,7 +12,7 @@ public:
   Shape(float, float);
   Shape();
   virtual ~Shape();
-  virtual void draw() = 0;
+  virtual void draw();
   virtual void update() = 0;
 
   static std::vector<Shape *> render_list;
@@ -21,6 +21,8 @@ protected:
   virtual void* getGlCoords() = 0;
   virtual int getNPoints() = 0;
   float x, y;
+
+  GLenum shapeComponent;
 };
 
 class Rectangle : public Shape
@@ -28,7 +30,6 @@ class Rectangle : public Shape
 public:
   Rectangle(float, float, float, float);
   void update() override;
-  void draw() override;
 
 protected:
   void* getGlCoords() override { return glCoords;}; 
@@ -42,7 +43,6 @@ class Line : public Shape
 public:
   Line(float = 0, float = 0, float = 0, float = 0);
   void update() override;
-  void draw() override;
 
 protected:
   void* getGlCoords() override { return glCoords;};  

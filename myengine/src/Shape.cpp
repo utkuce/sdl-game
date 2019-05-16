@@ -26,20 +26,41 @@ void Shape::draw()
 {
   int nPoints = getNPoints();
 
-  //VBO
+  //Create VBO
+  glGenBuffers( 1, &Renderer::gVBO );
+  glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
   glBufferData( GL_ARRAY_BUFFER, 2 * nPoints * sizeof(GLfloat), getGlCoords(), GL_DYNAMIC_DRAW );
- 
-  //IBO
+
+  //Create IBO
   GLuint indexData[nPoints];
   for (int i=0; i<nPoints; i++)
     indexData[i] = i;
+
+  glGenBuffers( 1, &Renderer::gIBO );
+  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO );
   glBufferData( GL_ELEMENT_ARRAY_BUFFER, nPoints * sizeof(GLuint), indexData, GL_DYNAMIC_DRAW );
+
+  //Enable vertex position
+  glEnableVertexAttribArray( Renderer::gVertexPos2DLocation );
+  //Set vertex data 
+  glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
+  glVertexAttribPointer( Renderer::gVertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL ); 
+  //Set index data and render 
+  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO ); 
+
+  //Draw
+  glDrawElements( shapeComponent, getNPoints(), GL_UNSIGNED_INT, NULL ); 
+  
+  //Disable vertex position 
+  glDisableVertexAttribArray( Renderer::gVertexPos2DLocation ); 
 }
 
 Rectangle::Rectangle(float x, float y, float w, float h) : Shape(x, y)
 {
   this->w = w;
   this->h = h;
+
+  shapeComponent = GL_TRIANGLE_FAN;
 }
 
 void Rectangle::update()
@@ -54,19 +75,13 @@ void Rectangle::update()
       glCoords[i][j] = coords[i][j];
 }
 
-void Rectangle::draw()
-{
-  Shape::draw();
-  glDrawElements( GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL ); 
-  
-  //Disable vertex position 
-  //glDisableVertexAttribArray( Renderer::gVertexPos2DLocation ); 
-}
 
 Line::Line(float x1, float y1, float x2, float y2) : Shape(x1, y1)
 {
   this->x2 = x2;
   this->y2 = y2;
+
+  shapeComponent = GL_LINES;
 }
 
 void Line::update()
@@ -81,20 +96,15 @@ void Line::update()
       glCoords[i][j] = coords[i][j];
 }
 
-void Line::draw()
-{
-  Shape::draw();
-  glDrawElements( GL_LINES, 2, GL_UNSIGNED_INT, NULL ); 
-}
-
 Circle::Circle(float x, float y, float r) : Shape(x + r, y + r)
 {
   this->r = r;
+  shapeComponent = GL_LINE_LOOP;
 }
 
 Circle::Circle()
 {
-
+  shapeComponent = GL_LINE_LOOP;
 }
 
 void Circle::update()
@@ -120,8 +130,7 @@ void Circle::update()
 
 void Circle::draw()
 {
-  Shape::draw();
   glLineWidth(2);
-  glDrawElements( GL_LINE_LOOP, getNPoints(), GL_UNSIGNED_INT, NULL ); 
+  Shape::draw();
   glLineWidth(1);
 }
