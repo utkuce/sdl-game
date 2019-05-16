@@ -155,6 +155,22 @@ void Renderer::initGL() {
 
     //Bind program
     glUseProgram(gProgramID);
+
+    //Create VBO
+    glGenBuffers( 1, &Renderer::gVBO );
+    glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
+
+    //Create IBO
+    glGenBuffers( 1, &Renderer::gIBO );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO );
+
+    //Enable vertex position
+    glEnableVertexAttribArray( Renderer::gVertexPos2DLocation );
+    //Set vertex data 
+    glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
+    glVertexAttribPointer( Renderer::gVertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL ); 
+    //Set index data and render 
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO ); 
 }
 
 void update_framerate()

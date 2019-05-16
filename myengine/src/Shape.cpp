@@ -42,27 +42,18 @@ void Rectangle::update()
 
 void Rectangle::draw()
 {
-  //Create VBO
-  glGenBuffers( 1, &Renderer::gVBO );
-  glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
+  //VBO
   glBufferData( GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), glCoords, GL_DYNAMIC_DRAW );
  
-  //Create IBO
+  //IBO
   GLuint indexData[] = { 0, 1, 2, 3 };
-  glGenBuffers( 1, &Renderer::gIBO );
-  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO );
   glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), indexData, GL_DYNAMIC_DRAW );
 
-  //Enable vertex position
-  glEnableVertexAttribArray( Renderer::gVertexPos2DLocation );
-  //Set vertex data 
-  glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
-  glVertexAttribPointer( Renderer::gVertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL ); 
-  //Set index data and render 
-  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO ); 
+  //Draw  
   glDrawElements( GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL ); 
+  
   //Disable vertex position 
-  glDisableVertexAttribArray( Renderer::gVertexPos2DLocation ); 
+  //glDisableVertexAttribArray( Renderer::gVertexPos2DLocation ); 
 }
 
 Line::Line(float x1, float y1, float x2, float y2) : Shape(x1, y1)
@@ -85,27 +76,15 @@ void Line::update()
 
 void Line::draw()
 {
-  //Create VBO
-  glGenBuffers( 1, &Renderer::gVBO );
-  glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
+  //VBO
   glBufferData( GL_ARRAY_BUFFER, 2 * 2 * sizeof(GLfloat), glCoords, GL_DYNAMIC_DRAW );
  
-  //Create IBO
+  //IBO
   GLuint indexData[] = { 0, 1 };
-  glGenBuffers( 1, &Renderer::gIBO );
-  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO );
   glBufferData( GL_ELEMENT_ARRAY_BUFFER, 2 * sizeof(GLuint), indexData, GL_DYNAMIC_DRAW );
 
-  //Enable vertex position
-  glEnableVertexAttribArray( Renderer::gVertexPos2DLocation );
-  //Set vertex data 
-  glBindBuffer( GL_ARRAY_BUFFER, Renderer::gVBO );
-  glVertexAttribPointer( Renderer::gVertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL ); 
-  //Set index data and render 
-  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, Renderer::gIBO ); 
+  //Draw
   glDrawElements( GL_LINES, 2, GL_UNSIGNED_INT, NULL ); 
-  //Disable vertex position 
-  glDisableVertexAttribArray( Renderer::gVertexPos2DLocation ); 
 }
 
 Circle::Circle(float x, float y, float r) : Shape(x + r, y + r)
@@ -141,11 +120,21 @@ void Circle::update()
 
 void Circle::draw()
 {
-  // glLineWidth(2);
-  // glColor3f(1, 0, 0);
+  glLineWidth(2);
 
-  // glBegin(GL_LINE_LOOP);
-  // for (int i = 0; i < glCoords.size(); i++)
-  //   glVertex2f(glCoords[i][0], glCoords[i][1]);
-  // glEnd();
+  int nPoints = glCoords.size();
+
+  //VBO
+  glBufferData( GL_ARRAY_BUFFER, 2 * nPoints * sizeof(GLfloat), &glCoords[0], GL_DYNAMIC_DRAW );
+ 
+  //IBO
+  GLuint indexData[nPoints];
+  for (int i=0; i<nPoints; i++)
+    indexData[i] = i;
+  glBufferData( GL_ELEMENT_ARRAY_BUFFER, nPoints * sizeof(GLuint), indexData, GL_DYNAMIC_DRAW );
+
+  //Draw
+  glDrawElements( GL_LINE_LOOP, nPoints, GL_UNSIGNED_INT, NULL ); 
+
+  glLineWidth(1);
 }
