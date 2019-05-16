@@ -18,6 +18,8 @@ public:
   static std::vector<Shape *> render_list;
 
 protected:
+  virtual void* getGlCoords() = 0;
+  virtual int getNPoints() = 0;
   float x, y;
 };
 
@@ -29,6 +31,8 @@ public:
   void draw() override;
 
 protected:
+  void* getGlCoords() override { return glCoords;}; 
+  int getNPoints() override { return 4;};
   float glCoords[4][2]; // 4 corners
   float w, h;
 };
@@ -41,6 +45,8 @@ public:
   void draw() override;
 
 protected:
+  void* getGlCoords() override { return glCoords;};  
+  int getNPoints() override { return 2;};
   float glCoords[2][2]; // 2 points
   float x2, y2;
 };
@@ -54,6 +60,8 @@ public:
   void draw() override;
 
 protected:
+  void* getGlCoords() override { return &glCoords[0];}; 
+  int getNPoints() override { return glCoords.size();};
   std::vector<std::array<float, 2>> glCoords;
   float r;
 };

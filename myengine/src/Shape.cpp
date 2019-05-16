@@ -22,6 +22,20 @@ Shape::~Shape()
     render_list.erase(it);
 }
 
+void Shape::draw() 
+{
+  int nPoints = getNPoints();
+
+  //VBO
+  glBufferData( GL_ARRAY_BUFFER, 2 * nPoints * sizeof(GLfloat), getGlCoords(), GL_DYNAMIC_DRAW );
+ 
+  //IBO
+  GLuint indexData[nPoints];
+  for (int i=0; i<nPoints; i++)
+    indexData[i] = i;
+  glBufferData( GL_ELEMENT_ARRAY_BUFFER, nPoints * sizeof(GLuint), indexData, GL_DYNAMIC_DRAW );
+}
+
 Rectangle::Rectangle(float x, float y, float w, float h) : Shape(x, y)
 {
   this->w = w;
@@ -42,14 +56,7 @@ void Rectangle::update()
 
 void Rectangle::draw()
 {
-  //VBO
-  glBufferData( GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), glCoords, GL_DYNAMIC_DRAW );
- 
-  //IBO
-  GLuint indexData[] = { 0, 1, 2, 3 };
-  glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), indexData, GL_DYNAMIC_DRAW );
-
-  //Draw  
+  Shape::draw();
   glDrawElements( GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL ); 
   
   //Disable vertex position 
@@ -76,14 +83,7 @@ void Line::update()
 
 void Line::draw()
 {
-  //VBO
-  glBufferData( GL_ARRAY_BUFFER, 2 * 2 * sizeof(GLfloat), glCoords, GL_DYNAMIC_DRAW );
- 
-  //IBO
-  GLuint indexData[] = { 0, 1 };
-  glBufferData( GL_ELEMENT_ARRAY_BUFFER, 2 * sizeof(GLuint), indexData, GL_DYNAMIC_DRAW );
-
-  //Draw
+  Shape::draw();
   glDrawElements( GL_LINES, 2, GL_UNSIGNED_INT, NULL ); 
 }
 
@@ -120,21 +120,8 @@ void Circle::update()
 
 void Circle::draw()
 {
+  Shape::draw();
   glLineWidth(2);
-
-  int nPoints = glCoords.size();
-
-  //VBO
-  glBufferData( GL_ARRAY_BUFFER, 2 * nPoints * sizeof(GLfloat), &glCoords[0], GL_DYNAMIC_DRAW );
- 
-  //IBO
-  GLuint indexData[nPoints];
-  for (int i=0; i<nPoints; i++)
-    indexData[i] = i;
-  glBufferData( GL_ELEMENT_ARRAY_BUFFER, nPoints * sizeof(GLuint), indexData, GL_DYNAMIC_DRAW );
-
-  //Draw
-  glDrawElements( GL_LINE_LOOP, nPoints, GL_UNSIGNED_INT, NULL ); 
-
+  glDrawElements( GL_LINE_LOOP, getNPoints(), GL_UNSIGNED_INT, NULL ); 
   glLineWidth(1);
 }
