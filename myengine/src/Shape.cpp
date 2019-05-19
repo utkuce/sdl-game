@@ -24,6 +24,10 @@ Shape::~Shape()
 
 void Shape::draw() 
 {
+  // Set color
+  GLint location = glGetUniformLocation(Renderer::gProgramID, "in_Color");
+  glUniform4f(location, color.r, color.g, color.b, color.a); // rgba
+
   int nPoints = getNPoints();
 
   //Create VBO
@@ -133,4 +137,20 @@ void Circle::draw()
   glLineWidth(2);
   Shape::draw();
   glLineWidth(1);
+}
+
+Color::Color(GLfloat r, GLfloat g, GLfloat b, GLfloat a)
+{
+  this->r = r; 
+  this->g = g; 
+  this->b = b; 
+  this->a = a;
+}
+
+Color::Color() 
+{
+  r=1;
+  g=1;
+  b=1;
+  a=1;
 }

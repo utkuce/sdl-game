@@ -6,6 +6,14 @@
 #include <math.h>
 #include "Renderer.h"
 
+class Color
+{
+public:
+  Color(GLfloat, GLfloat, GLfloat, GLfloat);
+  Color();
+  GLfloat r,g,b,a;
+};
+
 class Shape
 {
 public:
@@ -22,7 +30,8 @@ protected:
   virtual int getNPoints() = 0;
   float x, y;
 
-  GLenum shapeComponent;
+  GLenum shapeComponent;  
+  Color color;
 };
 
 class Rectangle : public Shape

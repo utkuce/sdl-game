@@ -6,6 +6,7 @@
 
 Player::Player() : Rectangle(0,0,50,50) 
 {
+  color = Color(1,1,1,1); // white
   shield = new Shield(this);
 }
 
@@ -95,6 +96,7 @@ Shield::Shield(Player* player)
 {
   this->player = player;
   r = player->w * 2;
+  color = Color(1,0,0,1); // red
 }
 
 void Shield::update()

@@ -26,8 +26,9 @@ const GLchar* fragmentShaderSource[] =
     "#version 100\n"
     "precision highp float;"
     "varying vec4 LFragment;"
+    "uniform vec4 in_Color;"
     "void main() {"
-    "   gl_FragColor = vec4( 1.0, 1.0, 1.0, 1.0 );"
+    "   gl_FragColor = in_Color;"
     "}"
 };
 
