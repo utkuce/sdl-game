@@ -214,7 +214,16 @@ void Renderer::toggleFullscreen()
 {
     SDL_SetWindowFullscreen(Renderer::window,
 			    Renderer::fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
-    SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+    
+    if (Renderer::fullscreen) 
+    {
+        SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+    }
+    else 
+    {
+        windowWidth = rendererWidth;
+        windowHeight = rendererHeight;
+    }
 }
 
 void printProgramLog( GLuint program ) { 
