@@ -1,3 +1,4 @@
 [submodule "imgui"]
 	path = myengine/src/imgui
 	url = https://github.com/ocornut/imgui.git
+	ignore = dirty
