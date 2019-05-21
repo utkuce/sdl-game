@@ -13,7 +13,7 @@ pacman -S mingw-w64-x86_64-cmake mingw-w64-x86_64-SDL2 mingw-w64-x86_64-glew
 ``` 
 ### Linux
 
-Install [sdl2](https://www.libsdl.org/index.php) development libraries and [clang](https://clang.llvm.org/) from the repository of your choice.
+Install [sdl2](https://www.libsdl.org/index.php) development libraries from the repository of your choice.
 
 ## Build & Run
 
