@@ -127,6 +127,8 @@ void fragmentShader(GLuint gProgramID)
 
 void Renderer::initGL() {
 
+    glewInit();
+
     //Generate program
     gProgramID = glCreateProgram();
 

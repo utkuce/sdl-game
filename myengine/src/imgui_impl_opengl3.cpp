@@ -82,8 +82,8 @@
 #endif
 #endif
 
-
-#define IMGUI_IMPL_OPENGL_ES3
+#undef IMGUI_IMPL_OPENGL_LOADER_GL3W
+#define IMGUI_IMPL_OPENGL_LOADER_GLEW
 
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>

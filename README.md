@@ -7,12 +7,10 @@ A small game if you can even call it that with minimal graphics and minimal phys
 ### Windows
 
 - Install `MSYS2` and update its repositories per the insturctions [here](https://www.msys2.org/)
-- Run the application `MSYS2 MinGW 64-bit`
-- Install required packages
-    - `pacman -S mingw-w64-x86_64-SDL2`
-    - `pacman -S mingw-w64-x86_64-clang`
-    - `pacman -S mingw-w64-x86_64-cmake`
-    
+- Assuming a 64 bit environment, run the application `MSYS2 MinGW 64-bit` and install required packages
+```
+pacman -S mingw-w64-x86_64-cmake mingw-w64-x86_64-SDL2 mingw-w64-x86_64-glew
+``` 
 ### Linux
 
 Install [sdl2](https://www.libsdl.org/index.php) development libraries and [clang](https://clang.llvm.org/) from the repository of your choice.
@@ -22,8 +20,7 @@ Install [sdl2](https://www.libsdl.org/index.php) development libraries and [clan
     $ git clone https://github.com/utkuce/sdl-game.git
     $ cd sdl-game/
     $ git submodule update --init
-    $ cmake . -DCMAKE_CXX_COMPILER=clang++ -G "Unix Makefiles"
-    $ make
+    $ cmake . -G "Unix Makefiles" && make
     $ /bin/sdlgame
 
 ## Demo

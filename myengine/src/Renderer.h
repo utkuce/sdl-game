@@ -2,7 +2,7 @@
 #define RENDERER_H
 
 #include <SDL2/SDL.h>
-#include <GLES3/gl3.h>
+#include <GL/glew.h>
 
 #include "Shape.h"
 #include "Interface.h"
