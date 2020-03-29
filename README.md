@@ -24,7 +24,7 @@ Install [sdl2](https://www.libsdl.org/index.php) development libraries from the 
     $ /bin/sdlgame
 
 ## Demo
-[Online Demo](https://utku.website/sdl-game/) compiled with [Emscripten](https://emscripten.org/) toolchain
+[Online Demo](https://utkuce.github.io/sdl-game/) compiled with [Emscripten](https://emscripten.org/) toolchain
 
 
 
